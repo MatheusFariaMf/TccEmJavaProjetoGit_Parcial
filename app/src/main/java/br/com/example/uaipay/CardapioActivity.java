@@ -1,0 +1,108 @@
+package br.com.example.uaipay;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CardapioActivity extends AppCompatActivity {
+    List<Produto> listaProdutos;
+    List<String> groupList;
+    List<String> childList;
+    Map<String, List<String>> mobileCollection;
+    Map<Produto, List<String>> colecaoProdutos;
+    ExpandableListView expandableListView;
+    ExpandableListAdapter expandableListAdapter;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_formas_pagamento);
+        createGroupList();
+        createCollection();
+        expandableListView = findViewById(R.id.elvProdutos);
+        expandableListAdapter = new MyExpandableListAdapter(this, listaProdutos, colecaoProdutos);
+        //expandableListAdapter = new MyExpandableListAdapter(this, groupList, mobileCollection);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setGroupIndicator(null);
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int lastExpandedPosition = -1;
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(lastExpandedPosition != -1 && groupPosition != lastExpandedPosition){
+                    expandableListView.collapseGroup(lastExpandedPosition);
+                }
+            }
+        });
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                String selected = expandableListAdapter.getChild(groupPosition, childPosition).toString();
+                Toast.makeText(getApplicationContext(), "Selected: "+selected, Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+    }
+
+    private void createCollection() {
+        String[] cartaoFormas = {"Credito", "Debito", "Ler boleto"};
+        String[] carnes = {"Peru", "Frango", "Carne de boi"};
+        String[] cores = {"azul", "Branco"};
+        String[] marcas = {"samsumg", "Mi", "LG", "muita coisa", "Lenovo"};
+        colecaoProdutos = new HashMap<Produto, List<String>>();
+        mobileCollection = new HashMap<String, List<String>>();
+        for(Produto produto : listaProdutos){
+            carregaPropriedadesProduto(produto);
+
+            colecaoProdutos.put(produto, childList);
+        }
+
+
+       /* for(String group : groupList){
+            if(group.equals("Cartao"))
+                loadChild(cartaoFormas);
+            else if(group.equals("PicPay"))
+                loadChild(carnes);
+            else if(group.equals("Boleto"))
+                loadChild(cores);
+            else
+                loadChild(marcas);
+            mobileCollection.put(group, childList);
+        }*/
+    }
+
+    private void carregaPropriedadesProduto(Produto produto) {
+        childList = new ArrayList<>();
+        childList.add("Preco: "+produto.getPreco());
+        childList.add("Quantidade: "+produto.getQuantidade());
+    }
+
+    private void loadChild(String[] mobileModels) {
+        childList = new ArrayList<>();
+        for(String model : mobileModels){
+            childList.add(model);
+        }
+    }
+
+    private void createGroupList(){
+        groupList = new ArrayList<>();
+        groupList.add("Cartao");
+        groupList.add("PicPay");
+        groupList.add("Boleto");
+        groupList.add("Dinheiro");
+
+        listaProdutos = new ArrayList<>();
+        listaProdutos.add(new Produto("Sorvete", 10.0, 4));
+        listaProdutos.add(new Produto("Hamburguer", 17.0, 15));
+        listaProdutos.add(new Produto("Pizza", 25.0, 10));
+    }
+}
