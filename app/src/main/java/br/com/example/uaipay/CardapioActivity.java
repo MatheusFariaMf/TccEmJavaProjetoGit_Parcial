@@ -3,10 +3,16 @@ package br.com.example.uaipay;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +31,37 @@ public class CardapioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //testando criacao e conversao do JSON
+        Gson gson = new Gson();
+        Estabelecimento estabelecimento = new Estabelecimento();
+
+        JSONObject estabelecimentoJSON = new JSONObject();
+
+        try {
+            estabelecimentoJSON.put("CodigoEstabelecimento", 3);
+            estabelecimentoJSON.put("TipoEstabelecimento", 203);
+            estabelecimentoJSON.put("DescricaoTipo", "Este é um estabelecimento de teste.");
+            estabelecimentoJSON.put("NomeEstabelecimento", "Restaurante Testezin");
+            estabelecimentoJSON.put("Rua", "Marechal Floriteste");
+            estabelecimentoJSON.put("Numero", 600);
+            estabelecimentoJSON.put("Complemento", "Apto 300");
+            estabelecimentoJSON.put("Bairro", "Fonte Grande");
+            estabelecimentoJSON.put("Cidade", "Ouro Branco");
+            estabelecimentoJSON.put("Estado", "Minas Gerais");
+            estabelecimentoJSON.put("CEP", "36406116");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        estabelecimentoJSON.toString();
+        //Toast.makeText(CardapioActivity.this, "JSON Estabelecimento: "+estabelecimentoJSON, Toast.LENGTH_LONG).show();
+        Log.e("CardapioActivity", "JSON Estabelecimento: "+estabelecimentoJSON);
+
+        estabelecimento = gson.fromJson(estabelecimentoJSON.toString(), Estabelecimento.class);
+        Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+estabelecimento.getNomeEstabelecimento());
+        Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+estabelecimento.getCidade());
+
+
+        //já feito a partir daqui
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formas_pagamento);
         createGroupList();
