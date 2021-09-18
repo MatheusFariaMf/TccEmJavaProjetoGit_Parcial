@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,12 +32,31 @@ public class CardapioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        List<Categoria>  listaCategoria = new ArrayList<>();
+        Categoria categoria1 = new Categoria();
+        categoria1.setCodigoCategoria(1);
+        categoria1.setNomeCategoria("Primeira categoria");
+        listaCategoria.add(categoria1);
+
+        List<String> listinha = new ArrayList<>();
+        listinha.add("carro");
+
         //testando criacao e conversao do JSON
         Gson gson = new Gson();
         Estabelecimento estabelecimento = new Estabelecimento();
 
-        JSONObject estabelecimentoJSON = new JSONObject();
+        JSONArray Menu = new JSONArray();
+        JSONObject Categoria = new JSONObject();
+        try {
+            Categoria.put("CodigoCategoria", 123);
+            Categoria.put("NomeCategoria","Categoria Edson");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Menu.put(Categoria);
 
+        JSONObject estabelecimentoJSON = new JSONObject();
         try {
             estabelecimentoJSON.put("CodigoEstabelecimento", 3);
             estabelecimentoJSON.put("TipoEstabelecimento", 203);
@@ -49,6 +69,9 @@ public class CardapioActivity extends AppCompatActivity {
             estabelecimentoJSON.put("Cidade", "Ouro Branco");
             estabelecimentoJSON.put("Estado", "Minas Gerais");
             estabelecimentoJSON.put("CEP", "36406116");
+            estabelecimentoJSON.put("Menu", Menu);
+            //estabelecimentoJSON.put("Menu", listaCategoria);
+            //estabelecimentoJSON.putOpt("Menu",listaCategoria);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -59,6 +82,8 @@ public class CardapioActivity extends AppCompatActivity {
         estabelecimento = gson.fromJson(estabelecimentoJSON.toString(), Estabelecimento.class);
         Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+estabelecimento.getNomeEstabelecimento());
         Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+estabelecimento.getCidade());
+        Categoria objetoTeste = estabelecimento.getMenu().get(0);
+        Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+objetoTeste.getNomeCategoria());
 
 
         //já feito a partir daqui

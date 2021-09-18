@@ -1,5 +1,7 @@
 package br.com.example.uaipay;
 
+import java.util.List;
+
 public class Estabelecimento {
     public int getCodigoEstabelecimento() {
         return CodigoEstabelecimento;
@@ -89,6 +91,14 @@ public class Estabelecimento {
         this.CEP = CEP;
     }
 
+    public List<Categoria> getMenu() {
+        return Menu;
+    }
+
+    public void setMenu(List<Categoria> menu) {
+        Menu = menu;
+    }
+
     private int CodigoEstabelecimento;
     private int TipoEstabelecimento;
     private String DescricaoTipo;
@@ -100,5 +110,6 @@ public class Estabelecimento {
     private String Cidade;
     private String Estado;
     private String CEP;
+    private List<Categoria> Menu;
 
 }
