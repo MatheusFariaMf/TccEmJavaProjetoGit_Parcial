@@ -1,5 +1,7 @@
 package br.com.example.uaipay;
 
+import java.util.List;
+
 public class Categoria {
     public int getCodigoCategoria() {
         return CodigoCategoria;
@@ -17,8 +19,16 @@ public class Categoria {
         NomeCategoria = nomeCategoria;
     }
 
+    public List<Produto> getItens() {
+        return Itens;
+    }
+
+    public void setItens(List<Produto> itens) {
+        Itens = itens;
+    }
+
     private int CodigoCategoria;
     private String NomeCategoria;
-
+    private List<Produto> Itens;
 
 }

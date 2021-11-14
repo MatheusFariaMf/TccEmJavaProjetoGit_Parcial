@@ -69,7 +69,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         //String mobileName = getGroup(groupPosition).toString();
         Produto produtoSelecionado =  (Produto)getGroup(groupPosition);
-        String mobileName = produtoSelecionado.getNome();
+        String mobileName = produtoSelecionado.getNomeItem();
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.linha_produtos, null);

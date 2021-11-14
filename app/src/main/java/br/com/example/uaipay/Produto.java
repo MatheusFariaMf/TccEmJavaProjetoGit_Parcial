@@ -6,37 +6,73 @@ public class Produto {
     }
 
     public Produto(String nome, double preco, int quantidade) {
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
+        this.NomeItem = nome;
+        this.Preco = preco;
+        this.Quantidade = quantidade;
     }
 
-    public String getNome() {
-        return nome;
+    public int getCodigoProduto() {
+        return CodigoProduto;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCodigoProduto(int codigoProduto) {
+        CodigoProduto = codigoProduto;
+    }
+
+    public String getNomeItem() {
+        return NomeItem;
+    }
+
+    public void setNomeItem(String nomeItem) {
+        NomeItem = nomeItem;
     }
 
     public double getPreco() {
-        return preco;
+        return Preco;
     }
 
     public void setPreco(double preco) {
-        this.preco = preco;
+        Preco = preco;
+    }
+
+    public String getLinkImagem() {
+        return LinkImagem;
+    }
+
+    public void setLinkImagem(String linkImagem) {
+        LinkImagem = linkImagem;
+    }
+
+    public String getObservacao() {
+        return Observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        Observacao = observacao;
     }
 
     public int getQuantidade() {
-        return quantidade;
+        return Quantidade;
     }
 
     public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+        this.Quantidade = quantidade;
     }
 
-    private String nome;
-    private double preco;
-    private int quantidade;
+    public String getUnidade() {
+        return Unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        Unidade = unidade;
+    }
+
+    private int CodigoProduto;
+    private String NomeItem;
+    private double Preco;
+    private String LinkImagem;
+    private String Observacao;
+    private int Quantidade;
+    private String Unidade;
 
 }

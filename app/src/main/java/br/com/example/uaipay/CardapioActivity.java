@@ -46,15 +46,38 @@ public class CardapioActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Estabelecimento estabelecimento = new Estabelecimento();
 
+        //Criando o vetor "Menu" no JSON
         JSONArray Menu = new JSONArray();
+        JSONArray Itens = new JSONArray();
+
+        JSONObject Produto = new JSONObject();
+        try {
+            Produto.put("CodigoProduto", 10);
+            Produto.put("NomeItem","Coca Cola Lata 375 ml");
+            Produto.put("Preco", 3.80);
+            Produto.put("LinkImagem", "/imagens/bebidas/porcaofritas.png");
+            Produto.put("Observacao", "Qualquer observação do produto.");
+            Produto.put("Quantidade",375);
+            Produto.put("Unidade", "kg");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Itens.put(Produto);
+
         JSONObject Categoria = new JSONObject();
+        JSONObject Categoria2 = new JSONObject();
         try {
             Categoria.put("CodigoCategoria", 123);
             Categoria.put("NomeCategoria","Categoria Edson");
+            Categoria.put("Itens", Itens);
+            Categoria2.put("CodigoCategoria", 111);
+            Categoria2.put("NomeCategoria","Categoria Matheus");
+            Categoria2.put("Itens", Itens);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Menu.put(Categoria);
+        Menu.put(Categoria2);
 
         JSONObject estabelecimentoJSON = new JSONObject();
         try {
@@ -84,6 +107,8 @@ public class CardapioActivity extends AppCompatActivity {
         Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+estabelecimento.getCidade());
         Categoria objetoTeste = estabelecimento.getMenu().get(0);
         Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+objetoTeste.getNomeCategoria());
+        Produto produtoTeste = estabelecimento.getMenu().get(0).getItens().get(0);
+        Log.e("CardapioActivity", "Já no objeto Estabelecimento: "+produtoTeste.getNomeItem());
 
 
         //já feito a partir daqui
